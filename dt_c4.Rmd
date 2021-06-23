@@ -1,0 +1,98 @@
+---
+title: "analytics_DT"
+author: "Ramiro Casó - Incae Business School"
+date: "6/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+```
+
+Lo primero es cargar las semanas.
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+sem_1 <- read_csv("sem_1.csv")
+sem_2 <- read_csv("sem_2.csv")
+sem_3 <- read_csv("sem_3.csv")
+sem_4 <- read_csv("sem_4.csv")
+sem_5 <- read_csv("sem_5.csv")
+sem_6 <- read_csv("sem_6.csv")
+sem_7 <- read_csv("sem_7.csv")
+
+```
+
+```{r include=TRUE}
+sem_1_clean <-select(sem_1, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 1)
+
+sem_2_clean <-select(sem_2, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 2)
+    
+sem_3_clean <-select(sem_3, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 3)
+
+sem_4_clean <-select(sem_4, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 4)  
+    
+sem_5_clean <-select(sem_5, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 5)       
+
+sem_6_clean <-select(sem_6, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 6)
+
+sem_7_clean <-select(sem_7, c(1,2,3,7,9,11,13)) %>% 
+  mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
+  mutate(semana = 7)
+```
+
+Antes de unir las filas, tenemos que asegurarnos que las columnas tienen todas el mismo nombre. 
+
+```{r include=TRUE}
+names(sem_1_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_1_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_1_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_1_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem_2_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_2_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_2_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_2_clean) [7] <-"¿Cómo podemos mejorar?"
+names(sem_3_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_3_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_3_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_3_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem_4_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_4_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_4_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_4_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem_5_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_5_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_5_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_5_clean) [7] <-"¿Cómo podemos mejorar?"
+names(sem_6_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_6_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_6_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_6_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem_7_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem_7_clean) [5] <-"Efectividad del módulo o webinar" 
+names(sem_7_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem_7_clean) [7] <-"¿Cómo podemos mejorar?" 
+
+```
+
+
+Ahora toca unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. 
+
+```{r include=TRUE}
+eval_totales <- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
+glimpse(eval_totales)
+
+```
