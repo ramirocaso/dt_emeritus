@@ -24,6 +24,7 @@ sem_7 <- read_csv("sem_7.csv")
 
 ```
 
+
 ```{r include=TRUE}
 sem_1_clean <-select(sem_1, c(1,2,3,7,9,11,13)) %>% 
   mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
@@ -53,6 +54,16 @@ sem_7_clean <-select(sem_7, c(1,2,3,7,9,11,13)) %>%
   mutate(across(everything(), ~replace_na(.x, "No Respondio"))) %>%
   mutate(semana = 7)
 ```
+
+```{r}
+sem_1_clean <- sem_1_clean %>% 
+  mutate(efect_modulo_num = case_when(`En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy Efectivo" ~ 5,
+                              `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Efectivo" ~ 4,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Neutral" ~ 3,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Inefectivo" ~ 2,
+                                  `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy Inefectivo" ~ 1)) 
+```
+
 
 Antes de unir las filas, tenemos que asegurarnos que las columnas tienen todas el mismo nombre. 
 
@@ -91,8 +102,8 @@ names(sem_7_clean) [7] <-"¿Cómo podemos mejorar?"
 
 Ahora toca unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. 
 
-```{r include=TRUE}
+```{r include=TRUE, paged.print=TRUE}
 eval_totales <- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
-glimpse(eval_totales)
+eval_totales
 
 ```
