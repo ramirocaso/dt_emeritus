@@ -180,25 +180,25 @@ sem_5 &lt;- read_csv(&quot;sem_5.csv&quot;)
 sem_6 &lt;- read_csv(&quot;sem_6.csv&quot;)
 sem_7 &lt;- read_csv(&quot;sem_7.csv&quot;)</code></pre>
 <pre class="r"><code>sem_1_clean &lt;-select(sem_1, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 1)
+  mutate(semana = &quot;1&quot;)
 
 sem_2_clean &lt;-select(sem_2, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 2)
+  mutate(semana = &quot;2&quot;)
     
 sem_3_clean &lt;-select(sem_3, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 3)
+  mutate(semana = &quot;3&quot;)
 
 sem_4_clean &lt;-select(sem_4, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 4)  
+  mutate(semana = &quot;4&quot;)  
     
 sem_5_clean &lt;-select(sem_5, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 5)       
+  mutate(semana = &quot;5&quot;)       
 
 sem_6_clean &lt;-select(sem_6, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 6)
+  mutate(semana = &quot;6&quot;)
 
 sem_7_clean &lt;-select(sem_7, c(1,2,3,7,9,11,13)) %&gt;% 
-  mutate(semana = 7)</code></pre>
+  mutate(semana = &quot;7&quot;)</code></pre>
 <p>Antes de unir las filas, tenemos que asegurarnos que las columnas tienen todas el mismo nombre.</p>
 <pre class="r"><code>names(sem_1_clean) [4] &lt;-&quot;En términos de aprendizaje ¿qué tan efectivo fue este módulo?&quot; 
 names(sem_1_clean) [5] &lt;-&quot;Efectividad del office hour o webinar&quot; 
@@ -313,23 +313,36 @@ sem_7_clean &lt;- sem_7_clean %&gt;%
                                   `Efectividad del office hour o webinar` == &quot;Muy inefectivo&quot; ~ 1))</code></pre>
 <p>Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar.</p>
 <pre class="r"><code>eval_totales &lt;- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
-eval_totales</code></pre>
-<pre><code>## # A tibble: 421 x 10
-##    name       id section   `En términos de a… `Efectividad de… `¿Qué le gustó d…
-##    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;            
-##  1 Cynth… 137800 SECCIÓN A Efectivo           Efectivo         &quot;Me gusto el enf…
-##  2 Carol…  56437 SECCIÓN A Muy efectivo       Muy efectivo     &quot;Todas las activ…
-##  3 Saman… 139382 SECCIÓN … Efectivo           Efectivo         &quot;Nuevas herramie…
-##  4 Marce… 137415 SECCIÓN B Muy efectivo       Muy efectivo     &quot;El trabajo cola…
-##  5 ALEJA… 132666 SECCIÓN B Neutral            Neutral           &lt;NA&gt;            
-##  6 Paola… 132671 SECCIÓN B Efectivo           Efectivo         &quot;Que aclaré algu…
-##  7 Susan… 136722 SECCIÓN B Muy efectivo       Muy efectivo     &quot;La oportunidad …
-##  8 Virgi… 131916 SECCIÓN A Muy efectivo       Efectivo         &quot;Que fué realiza…
-##  9 Gioco… 138157 SECCIÓN A Muy efectivo       Muy efectivo     &quot;1. La metodolog…
-## 10 Marga… 139842 Certific… Muy efectivo       Muy efectivo     &quot;Que los conocim…
-## # … with 411 more rows, and 4 more variables: ¿Cómo podemos mejorar? &lt;chr&gt;,
-## #   semana &lt;dbl&gt;, Efectividad Modulo Num &lt;dbl&gt;,
-## #   Efectividad OH-Webinar Num &lt;dbl&gt;</code></pre>
+glimpse(eval_totales)</code></pre>
+<pre><code>## Rows: 421
+## Columns: 10
+## $ name                                                            &lt;chr&gt; &quot;Cynth…
+## $ id                                                              &lt;dbl&gt; 137800…
+## $ section                                                         &lt;chr&gt; &quot;SECCI…
+## $ `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` &lt;chr&gt; &quot;Efect…
+## $ `Efectividad del office hour o webinar`                         &lt;chr&gt; &quot;Efect…
+## $ `¿Qué le gustó del módulo?`                                     &lt;chr&gt; &quot;Me gu…
+## $ `¿Cómo podemos mejorar?`                                        &lt;chr&gt; &quot;Al pr…
+## $ semana                                                          &lt;chr&gt; &quot;1&quot;, &quot;…
+## $ `Efectividad Modulo Num`                                        &lt;dbl&gt; 4, 5, …
+## $ `Efectividad OH-Webinar Num`                                    &lt;dbl&gt; 4, 5, …</code></pre>
+<pre class="r"><code>eval_totales %&gt;%
+  group_by(name) %&gt;%
+  summarise(&quot;media modulo&quot; = mean(`Efectividad Modulo Num`, na.rm=TRUE), &quot;media oh/web&quot; = mean(`Efectividad OH-Webinar Num`, na.rm=TRUE))</code></pre>
+<pre><code>## # A tibble: 94 x 3
+##    name                           `media modulo` `media oh/web`
+##    &lt;chr&gt;                                   &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Adrian Alberto Castro Ureña              4.57           5   
+##  2 ALEJANDRA CAROLINA OLIVA VEJAR           3              3   
+##  3 Alex Cárdenas                            5              5   
+##  4 Alvaro Menchola                          4.2            3.75
+##  5 Alvaro Pantoja                           4.33           4.33
+##  6 Amilcar Otero Guerra                     4.5            5   
+##  7 Ana Lucía Simón Corrales                 5              5   
+##  8 Andrea Benavides                         4.6            4.8 
+##  9 Carlos Cobo                              4.2            4.4 
+## 10 Carlos Emilio Miguel Vaquero             4.5            4.5 
+## # … with 84 more rows</code></pre>
 
 
 

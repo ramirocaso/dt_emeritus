@@ -171,8 +171,15 @@ sem_7_clean <- sem_7_clean %>%
 
 Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. 
 
-```{r include=TRUE, paged.print=TRUE}
+```{r message=TRUE, include=TRUE, paged.print=TRUE}
 eval_totales <- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
-str(eval_totales)
+glimpse(eval_totales)
+write.csv(eval_totales, "eval_totales.csv", row.names = F)
 
+```
+
+```{r}
+eval_totales %>%
+  group_by(name) %>%
+  summarise("media modulo" = mean(`Efectividad Modulo Num`, na.rm=TRUE), "media oh/web" = mean(`Efectividad OH-Webinar Num`, na.rm=TRUE))
 ```
