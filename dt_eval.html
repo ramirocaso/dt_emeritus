@@ -311,8 +311,14 @@ sem_7_clean &lt;- sem_7_clean %&gt;%
                                 `Efectividad del office hour o webinar` == &quot;Neutral&quot; ~ 3,
                                 `Efectividad del office hour o webinar` == &quot;Inefectivo&quot; ~ 2,
                                   `Efectividad del office hour o webinar` == &quot;Muy inefectivo&quot; ~ 1))</code></pre>
-<p>Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar.</p>
+<p>Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. Además, limpiamos las celdas que estaban mal codificadas, asegurándonos que todas tengan solo SECCIÓN como corresponde.</p>
 <pre class="r"><code>eval_totales &lt;- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
+
+eval_totales$section &lt;- str_replace(eval_totales$section, &quot;SECCIÓN A, Certificado: INCAE Design Thinking&quot;, &quot;SECCIÓN A&quot;) 
+eval_totales$section &lt;- str_replace(eval_totales$section, &quot;SECCIÓN B, Certificado: INCAE Design Thinking&quot;, &quot;SECCIÓN B&quot;) 
+eval_totales$section &lt;- str_replace(eval_totales$section, &quot;Certificado: INCAE Design Thinking, SECCIÓN A&quot;, &quot;SECCIÓN A&quot;) 
+eval_totales$section &lt;- str_replace(eval_totales$section, &quot;Certificado: INCAE Design Thinking, SECCIÓN B&quot;, &quot;SECCIÓN B&quot;) 
+
 glimpse(eval_totales)</code></pre>
 <pre><code>## Rows: 421
 ## Columns: 10
@@ -326,6 +332,3822 @@ glimpse(eval_totales)</code></pre>
 ## $ semana                                                          &lt;chr&gt; &quot;1&quot;, &quot;…
 ## $ `Efectividad Modulo Num`                                        &lt;dbl&gt; 4, 5, …
 ## $ `Efectividad OH-Webinar Num`                                    &lt;dbl&gt; 4, 5, …</code></pre>
+<pre class="r"><code>write.csv(eval_totales, &quot;eval_totales.csv&quot;, row.names = F)
+
+kable(eval_totales[,c(1,3,4,5,8,9,10)], align = &quot;llccccc&quot;, &quot;pipe&quot;)</code></pre>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="4%" />
+<col width="30%" />
+<col width="19%" />
+<col width="3%" />
+<col width="11%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">section</th>
+<th align="center">En términos de aprendizaje ¿qué tan efectivo fue este módulo?</th>
+<th align="center">Efectividad del office hour o webinar</th>
+<th align="center">semana</th>
+<th align="center">Efectividad Modulo Num</th>
+<th align="center">Efectividad OH-Webinar Num</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cynthia Núñez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Carol Zummar</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Samantha Gordillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Marcela Salas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">ALEJANDRA CAROLINA OLIVA VEJAR</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Paola Alessandra Calderón</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Virginia Guerra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Gioconda Baltodano</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Margarita Pilicita</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Inefectivo</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Fernando Castellanos Gil</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Amilcar Otero Guerra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Henrique Pecci</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">1</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Graciela Lopez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Lucía Simón Corrales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Jonathan Diaz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Monica Merino</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Joel Díaz Llamas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Cobo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Valeria Maria Madrid Vallecillo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonia María López Romero</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Verdezoto</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">CARLOS RODRIGUEZ</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Carlos Martinez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Luis Eduardo Gómez Madrid</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Emilio Miguel Vaquero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Roy Ortiz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Cesar Martinez Ynsfran</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">cynthia montalto lorenzo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Regina Beatriz Viscarra Cortez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Rodrigo Cárcamo Guerrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Guelly Melina Arevalo Gonzales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Gabriela De Carlo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Mauricio Barrientos</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">DIANA LORENZO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ignacio Rojas Paz Soldan</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Roberto Cobo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Keylin Herrera</td>
+<td align="left">NA</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">CLAUDIA HERRERA</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Keysha Tamara Nedrick Villar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">SUSAN CASTILLO</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Menchola</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Piter Canedo Camacho</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Vania Soza</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Marco Vinicio Martínez Morales</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">MARIA GABRIELA ARIAS</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Lucía Simón Corrales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Graciela Lopez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Emilio Miguel Vaquero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Yennifer Alpizar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Monica Merino</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">NA</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Samantha Gordillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ismael Pinzón</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonia María López Romero</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Gioconda Baltodano</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Vilma Castillo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Alex Cárdenas</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Janssy Villalobos</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Inefectivo</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rodrigo Cárcamo Guerrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Cobo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">José Erick Patzan Sierra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">MARIA GABRIELA ARIAS</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Roberto Cobo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Cesar Martinez Ynsfran</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">SUSAN CASTILLO</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Mauricio Barrientos</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Verdezoto</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Piter Canedo Camacho</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">DIANA LORENZO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">CLAUDIA HERRERA</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">cynthia montalto lorenzo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Gladis López</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Keysha Tamara Nedrick Villar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Inefectivo</td>
+<td align="center">Muy inefectivo</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Inefectivo</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Guelly Melina Arevalo Gonzales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">NA</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Alvaro Menchola</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">NA</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Amilcar Otero Guerra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">José Gabriel Cano Portocarrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Inefectivo</td>
+<td align="center">Neutral</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Jonathan Diaz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Graciela Lopez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Regina Beatriz Viscarra Cortez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Monica Merino</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">cynthia montalto lorenzo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Samantha Gordillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ignacio Rojas Paz Soldan</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">NA</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Luis Eduardo Gómez Madrid</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">MARIA GABRIELA ARIAS</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Cobo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">CARLOS RODRIGUEZ</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Henrique Pecci</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Keysha Tamara Nedrick Villar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Miguel Deza Castillo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Mauricio Barrientos</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Margarita Pilicita</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Amilcar Otero Guerra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonia María López Romero</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Vania Soza</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Roy Ortiz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Marco Vinicio Martínez Morales</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Inefectivo</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Guelly Melina Arevalo Gonzales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Joel Díaz Llamas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carol Zummar</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Gabriela De Carlo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Menchola</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">DIANA LORENZO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">José Gabriel Cano Portocarrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Claudia Garcia Reyes</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Vania Soza</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Joel Díaz Llamas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">4</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Marta Alejandra Montenegro</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Monica Merino</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonia María López Romero</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Inefectivo</td>
+<td align="center">Neutral</td>
+<td align="center">4</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Marco Vinicio Martínez Morales</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Lucía Simón Corrales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Luis Eduardo Gómez Madrid</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ignacio Rojas Paz Soldan</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">SUSAN CASTILLO</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Gabriela De Carlo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Margarita Pilicita</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Keysha Tamara Nedrick Villar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Cesar Martinez Ynsfran</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Piter Canedo Camacho</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Yennifer Alpizar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">CLAUDIA HERRERA</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Samantha Gordillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Menchola</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Monica Merino</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rodrigo Cárcamo Guerrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Mauricio Barrientos</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ignacio Rojas Paz Soldan</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">SUSAN CASTILLO</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Felipe Ernesto Gonzalez Gracias</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Cobo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Alvaro Menchola</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Luis Eduardo Gómez Madrid</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Marcela Salas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">MARIA GABRIELA ARIAS</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Lucía Simón Corrales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Cesar Martinez Ynsfran</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Yennifer Alpizar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Graciela Lopez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy inefectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="left">Samantha Gordillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Margarita Pilicita</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">cynthia montalto lorenzo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Sonia María López Romero</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Regina Beatriz Viscarra Cortez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Verdezoto</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Amilcar Otero Guerra</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">DIANA LORENZO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Juan Fernando Castellanos Gil</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">CARLOS RODRIGUEZ</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Joel Díaz Llamas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Piter Canedo Camacho</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Keysha Tamara Nedrick Villar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">CLAUDIA HERRERA</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Guelly Melina Arevalo Gonzales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Roy Ortiz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Henrique Pecci</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Alex Cárdenas</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Claudia Garcia Reyes</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">5</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">NA</td>
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">ALEJANDRA CAROLINA OLIVA VEJAR</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Roy Ortiz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Alex Cárdenas</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">José Gabriel Cano Portocarrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Juan Fernando Castellanos Gil</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Verdezoto</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Henrique Pecci</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rocio Villegas Jimenez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Maria Carlina Cespedes Ross</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Alvaro Pantoja</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Gabriela De Carlo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">Luis Eduardo Gómez Madrid</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">NA</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Margarita Pilicita</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Neutral</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Vania Soza</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Yennifer Alpizar</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ismael Pinzón</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Claudia Garcia Reyes</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Felipe Ernesto Gonzalez Gracias</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">DIANA LORENZO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Daniel García</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Andrea Benavides</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">7</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Susan Alvarado Sandoval</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Roy Ortiz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Santiago Pizarro Baculima</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Elena Pacheco Valverde</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Pablo Conejo Cervantes</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">MIGUEL ANGEL ECHEVERRIA CALDERON</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Romero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Joaquín Baquerizo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Odette Garrido</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Verdezoto</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Leonardo Delgado Arroyo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">7</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivannia Sanchez Valle</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Guelly Melina Arevalo Gonzales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sylvana Sanz</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Yorlin Yassiel Reyes Miranda</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Henrique Pecci</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Juan Fernando Castellanos Gil</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Jorge Akerman</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Melissa Solano Soto</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Lucía Simón Corrales</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Silvia Orozco</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Luisa Elena Pozuelo Arce</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Neutral</td>
+<td align="center">Neutral</td>
+<td align="center">7</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="left">MARIA GABRIELA ARIAS</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JAVIER DELLA CELLA</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Ignacio Rojas Paz Soldan</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Daniel Martínez Jiménez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rita Cetrangolo</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Adrian Alberto Castro Ureña</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Piter Canedo Camacho</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Marco Vinicio Martínez Morales</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Garcia</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">NA</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">David Juarez</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Carlos Cobo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Alex Cárdenas</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Doménica Bolaños Urbina</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Sussana Artavia Martínez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">IVAN NARANJO</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">CARLOS RODRIGUEZ</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Joel Díaz Llamas</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Claudia Garcia Reyes</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">cynthia montalto lorenzo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">CLAUDIA HERRERA</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Gioconda Baltodano</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">NA</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Katherine Amores</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Rodrigo Cárcamo Guerrero</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Cristina Trujillo</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Jose Luis Hernandez</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Giovanni Bonessa</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Muy efectivo</td>
+<td align="center">Muy efectivo</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="left">Ninna Ottey</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Marta Alejandra Montenegro</td>
+<td align="left">SECCIÓN A</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Xavier Viñals</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="left">JOANNA DUARTE</td>
+<td align="left">SECCIÓN B</td>
+<td align="center">Efectivo</td>
+<td align="center">Efectivo</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>eval_totales %&gt;%
   group_by(name) %&gt;%
   summarise(&quot;media modulo&quot; = mean(`Efectividad Modulo Num`, na.rm=TRUE), &quot;media oh/web&quot; = mean(`Efectividad OH-Webinar Num`, na.rm=TRUE))</code></pre>

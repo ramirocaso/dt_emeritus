@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
+library(knitr)
 ```
 
 Lo primero es cargar las semanas.
@@ -169,13 +170,21 @@ sem_7_clean <- sem_7_clean %>%
                                   `Efectividad del office hour o webinar` == "Muy inefectivo" ~ 1))
 ```
 
-Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. 
+Finalmente, podemos unir las evaluaciones, aprovechando que tenemos la columna semana para luego agrupar. Además, limpiamos las celdas que estaban mal codificadas, asegurándonos que todas tengan solo SECCIÓN como corresponde. 
 
 ```{r message=TRUE, include=TRUE, paged.print=TRUE}
 eval_totales <- rbind(sem_1_clean, sem_2_clean,sem_3_clean, sem_4_clean, sem_5_clean, sem_6_clean, sem_7_clean)
+
+eval_totales$section <- str_replace(eval_totales$section, "SECCIÓN A, Certificado: INCAE Design Thinking", "SECCIÓN A") 
+eval_totales$section <- str_replace(eval_totales$section, "SECCIÓN B, Certificado: INCAE Design Thinking", "SECCIÓN B") 
+eval_totales$section <- str_replace(eval_totales$section, "Certificado: INCAE Design Thinking, SECCIÓN A", "SECCIÓN A") 
+eval_totales$section <- str_replace(eval_totales$section, "Certificado: INCAE Design Thinking, SECCIÓN B", "SECCIÓN B") 
+
 glimpse(eval_totales)
+
 write.csv(eval_totales, "eval_totales.csv", row.names = F)
 
+kable(eval_totales[,c(1,3,4,5,8,9,10)], align = "llccccc", "pipe")
 ```
 
 ```{r}
