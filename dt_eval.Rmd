@@ -184,7 +184,7 @@ glimpse(eval_totales)
 
 write.csv(eval_totales, "eval_totales.csv", row.names = F)
 
-kable(eval_totales[,c(1,3,4,5,8,9,10)], align = "llccccc", "pipe")
+kable(eval_totales[1:20,c(2,3,4,5,8,9,10)], caption = "Primeras 20 evaluaciones", align = "llccccc", "pipe")
 ```
 
 ```{r}
