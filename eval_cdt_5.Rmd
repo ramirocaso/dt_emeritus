@@ -20,8 +20,8 @@ Primero cargamos los datos para cada semana.
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 sem_1_ed5 <- read_csv("sem1_ed5.csv")
 sem_2_ed5 <- read_csv("sem2_ed5.csv")
-sem_3_ed5 <- read_csv("sem1_ed5.csv")
-sem_4_ed5 <- read_csv("sem2_ed5.csv")
+sem_3_ed5 <- read_csv("sem3_ed5.csv")
+sem_4_ed5 <- read_csv("sem4_ed5.csv")
 ```
 
 y luego los vamos limpiando. Además, agregamos dos columnas adicionales que sirven luego para identificar la semana y la edición del certificado. 
@@ -136,6 +136,7 @@ descriptivos <- e_totales_ed5 %>%
             "SD modulo" = sd(`Efectividad Modulo Num`, na.rm = TRUE), 
             "SD AA/Webinar"= sd(`Efectividad OH-Webinar Num`, na.rm = TRUE))
 
+descriptivos
 ```
 
 Finalmente, podemos hacer algunas visualizaciones. 
@@ -153,7 +154,12 @@ ggplot(e_totales_ed5, aes(`Efectividad OH-Webinar Num`)) + geom_histogram(binwid
 ggplot(descriptivos, aes(x = `Semana`, y = `efectividad modulo`)) + 
   geom_line(color = "blue", size=1.2, na.rm = TRUE, group=1) + 
   geom_point() + 
-  ylim(0,5)
+  ylim(3,5)
+
+ggplot(descriptivos, aes(x = `Semana`, y = `efectividad AA/Webinar`)) + 
+  geom_line(color = "blue", size=1.2, na.rm = TRUE, group=1) + 
+  geom_point() + 
+  ylim(3,5)
 ```
 
 
@@ -161,5 +167,6 @@ Finalmente, exportamos lo trabajado en un archivo CSV para poder visualizar tran
 
 ```{r}
 write_csv(e_totales_ed5, "e_totales_ed5.csv")
+write_excel_csv(e_totales_ed5,"e_totales_ed5.xls")
 ```
 
