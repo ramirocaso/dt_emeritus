@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(knitr)
+library(ggplot2)
 ```
 
 ##Cargar los Datos y limpiarlos.  
@@ -135,8 +136,6 @@ descriptivos <- e_totales_ed5 %>%
             "SD modulo" = sd(`Efectividad Modulo Num`, na.rm = TRUE), 
             "SD AA/Webinar"= sd(`Efectividad OH-Webinar Num`, na.rm = TRUE))
 
-descriptivos
-
 ```
 
 Finalmente, podemos hacer algunas visualizaciones. 
@@ -148,6 +147,19 @@ ggplot(e_totales_ed5, aes(`Efectividad Modulo Num`)) + geom_histogram(binwidth =
 ggplot(e_totales_ed5, aes(`Efectividad OH-Webinar Num`)) + geom_histogram(binwidth = 1) +
   facet_wrap(~Semana, scales = "fixed")
 
-ggplot(descriptivos, aes(x = `Semana`, y = `efectividad modulo`)) + geom_line(color = "blue", size=1.2, na.rm = TRUE, inherit.aes = TRUE) + geom_point() + ylim(0,5)
-
 ```
+
+```{r}
+ggplot(descriptivos, aes(x = `Semana`, y = `efectividad modulo`)) + 
+  geom_line(color = "blue", size=1.2, na.rm = TRUE, group=1) + 
+  geom_point() + 
+  ylim(0,5)
+```
+
+
+Finalmente, exportamos lo trabajado en un archivo CSV para poder visualizar tranquilos en Tableau
+
+```{r}
+write_csv(e_totales_ed5, "e_totales_ed5.csv")
+```
+
