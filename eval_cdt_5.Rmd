@@ -18,6 +18,9 @@ library(knitr)
 Primero cargamos los datos para cada semana.
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 sem_1_ed5 <- read_csv("sem1_ed5.csv")
+sem_2_ed5 <- read_csv("sem2_ed5.csv")
+sem_3_ed5 <- read_csv("sem1_ed5.csv")
+sem_4_ed5 <- read_csv("sem2_ed5.csv")
 ```
 
 y luego los vamos limpiando. Además, agregamos dos columnas adicionales que sirven luego para identificar la semana y la edición del certificado. 
@@ -26,7 +29,16 @@ y luego los vamos limpiando. Además, agregamos dos columnas adicionales que sir
 ```{r}
 sem1_ed5_clean <-select(sem_1_ed5, c(1,2,3,7,9,11,13)) %>% 
   mutate(Semana = "1", Edición = "5")
-head(sem1_ed5_clean)
+
+sem2_ed5_clean <-select(sem_2_ed5, c(1,2,3,7,9,11,13)) %>% 
+  mutate(Semana = "2", Edición = "5")
+
+sem3_ed5_clean <-select(sem_3_ed5, c(1,2,3,7,9,11,13)) %>% 
+  mutate(Semana = "3", Edición = "5")
+
+sem4_ed5_clean <-select(sem_4_ed5, c(1,2,3,7,9,11,13)) %>% 
+  mutate(Semana = "4", Edición = "5")
+
 ```
 
 Antes de unir las filas, tenemos que asegurarnos que las columnas tienen todas el mismo nombre. 
@@ -36,7 +48,18 @@ names(sem1_ed5_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue
 names(sem1_ed5_clean) [5] <-"Efectividad del office hour o webinar" 
 names(sem1_ed5_clean) [6] <-"¿Qué le gustó del módulo?" 
 names(sem1_ed5_clean) [7] <-"¿Cómo podemos mejorar?" 
-head(sem1_ed5_clean)
+names(sem2_ed5_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem2_ed5_clean) [5] <-"Efectividad del office hour o webinar" 
+names(sem2_ed5_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem2_ed5_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem3_ed5_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem3_ed5_clean) [5] <-"Efectividad del office hour o webinar" 
+names(sem3_ed5_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem3_ed5_clean) [7] <-"¿Cómo podemos mejorar?" 
+names(sem4_ed5_clean) [4] <-"En términos de aprendizaje ¿qué tan efectivo fue este módulo?" 
+names(sem4_ed5_clean) [5] <-"Efectividad del office hour o webinar" 
+names(sem4_ed5_clean) [6] <-"¿Qué le gustó del módulo?" 
+names(sem4_ed5_clean) [7] <-"¿Cómo podemos mejorar?" 
 ```
 
 El siguiente paso es agregar dos columnas nuevas con las escalas de satisfacción en nivel de medida de intervalo o numéricas. 
@@ -53,28 +76,78 @@ sem1_ed5_clean <- sem1_ed5_clean %>%
                                 `Efectividad del office hour o webinar` == "Neutral" ~ 3,
                                 `Efectividad del office hour o webinar` == "Inefectivo" ~ 2,
                                   `Efectividad del office hour o webinar` == "Muy inefectivo" ~ 1))
-head(sem1_ed5_clean)
+
+sem2_ed5_clean <- sem2_ed5_clean %>% 
+  mutate("Efectividad Modulo Num" = case_when(`En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy efectivo" ~ 5,
+                              `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Efectivo" ~ 4,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Neutral" ~ 3,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Inefectivo" ~ 2,
+                                  `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy inefectivo" ~ 1)) %>%
+  mutate("Efectividad OH-Webinar Num" = case_when(`Efectividad del office hour o webinar` == "Muy efectivo" ~ 5,
+                              `Efectividad del office hour o webinar` == "Efectivo" ~ 4,
+                                `Efectividad del office hour o webinar` == "Neutral" ~ 3,
+                                `Efectividad del office hour o webinar` == "Inefectivo" ~ 2,
+                                  `Efectividad del office hour o webinar` == "Muy inefectivo" ~ 1))
+
+sem3_ed5_clean <- sem3_ed5_clean %>% 
+  mutate("Efectividad Modulo Num" = case_when(`En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy efectivo" ~ 5,
+                              `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Efectivo" ~ 4,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Neutral" ~ 3,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Inefectivo" ~ 2,
+                                  `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy inefectivo" ~ 1)) %>%
+  mutate("Efectividad OH-Webinar Num" = case_when(`Efectividad del office hour o webinar` == "Muy efectivo" ~ 5,
+                              `Efectividad del office hour o webinar` == "Efectivo" ~ 4,
+                                `Efectividad del office hour o webinar` == "Neutral" ~ 3,
+                                `Efectividad del office hour o webinar` == "Inefectivo" ~ 2,
+                                  `Efectividad del office hour o webinar` == "Muy inefectivo" ~ 1))
+
+sem4_ed5_clean <- sem4_ed5_clean %>% 
+  mutate("Efectividad Modulo Num" = case_when(`En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy efectivo" ~ 5,
+                              `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Efectivo" ~ 4,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Neutral" ~ 3,
+                                `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Inefectivo" ~ 2,
+                                  `En términos de aprendizaje ¿qué tan efectivo fue este módulo?` == "Muy inefectivo" ~ 1)) %>%
+  mutate("Efectividad OH-Webinar Num" = case_when(`Efectividad del office hour o webinar` == "Muy efectivo" ~ 5,
+                              `Efectividad del office hour o webinar` == "Efectivo" ~ 4,
+                                `Efectividad del office hour o webinar` == "Neutral" ~ 3,
+                                `Efectividad del office hour o webinar` == "Inefectivo" ~ 2,
+                                  `Efectividad del office hour o webinar` == "Muy inefectivo" ~ 1))
+
 ```
 
 ## Descriptivos
 
-Ahora cargamos algunos descriptivos. 
+Ahora pegamos todas las filas
 
 ```{r message=TRUE, include=TRUE, paged.print=TRUE}
-descriptivos_sem1 <- sem1_ed5_clean %>% 
-  summarise(
-  "Media Modulo" = mean(sem1_ed5_clean$`Efectividad Modulo Num`),
-  "SD Modulo" = sd(sem1_ed5_clean$`Efectividad Modulo Num`),
-  "Media AA" = mean(sem1_ed5_clean$`Efectividad OH-Webinar Num`),
-  "SD AA" = sd(sem1_ed5_clean$`Efectividad OH-Webinar Num`),
-  "Respuestas" = count(sem1_ed5_clean)
-)
-descriptivos_sem1
+
+e_totales_ed5 <- rbind(sem1_ed5_clean,sem2_ed5_clean,sem3_ed5_clean,sem4_ed5_clean)
+e_totales_ed5
 ```
 
-## Visualización
+Ahora si podemos hacer algunos descriptivos
 
 ```{r}
-ggplot(sem1_ed5_clean, aes())
+descriptivos <- e_totales_ed5 %>%
+  group_by(Semana) %>%
+  summarise("efectividad modulo" = mean(`Efectividad Modulo Num`, na.rm = TRUE),
+            "efectividad AA/Webinar" = mean(`Efectividad OH-Webinar Num`, na.rm = TRUE),
+            "SD modulo" = sd(`Efectividad Modulo Num`, na.rm = TRUE), 
+            "SD AA/Webinar"= sd(`Efectividad OH-Webinar Num`, na.rm = TRUE))
+
+descriptivos
+
 ```
 
+Finalmente, podemos hacer algunas visualizaciones. 
+
+```{r}
+ggplot(e_totales_ed5, aes(`Efectividad Modulo Num`)) + geom_histogram(binwidth = 1) +
+  facet_wrap(~Semana, scales = "fixed")
+
+ggplot(e_totales_ed5, aes(`Efectividad OH-Webinar Num`)) + geom_histogram(binwidth = 1) +
+  facet_wrap(~Semana, scales = "fixed")
+
+ggplot(descriptivos, aes(x = `Semana`, y = `efectividad modulo`)) + geom_line(color = "blue", size=1.2, na.rm = TRUE, inherit.aes = TRUE) + geom_point() + ylim(0,5)
+
+```
